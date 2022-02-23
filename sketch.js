@@ -23,10 +23,11 @@ function setup() {
   parede1.visible = false
   parede2.visible = false
   inimigos = createGroup();
+  tiros = createGroup();
   limite = createEdgeSprites;
   criarinimigos(65);
   criarinimigos(65+40);
-  criarinimigos(65+40+40)
+  criarinimigos(65+40+40);
 }
 
 function draw() {
@@ -42,18 +43,20 @@ function draw() {
     atirar(); 
   }
 
-
   console.log(nave.y);
   nave.collide(parede1)
   nave.collide(parede2)
+
 }
 
 function atirar() {
   if(frameCount % 14 === 0) {
 tiro = createSprite(nave.x, nave.y - 7, 5, 18)
+tiros.add(tiro);
 tiro.velocityY = -15
 tiro.addImage(tiroImage)
 tiro.scale = 0.055
+
 }
 }
 function criarinimigos(y, l) {
@@ -63,9 +66,15 @@ function criarinimigos(y, l) {
     inimigo.addImage(inimigoImage)
     inimigo.scale = 0.15
     inimigos.add(inimigo)
+    if (tiros.isTouching(inimigo)){
+      inimigohit();
+  
+    }
   }
-
+  
 }
-
+function inimigohit() {
+  inimigo.destroy();
+}
 
 
